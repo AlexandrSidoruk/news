@@ -1,5 +1,9 @@
-const unirest = require('unirest');
-const cheerio = require('cheerio');
+/*const unirest = require('unirest');
+const cheerio = require('cheerio');*/
+import unirest from "unirest";
+import cheerio from "cheerio";
+
+
 
 /*
 
@@ -47,11 +51,11 @@ function vechirniy() {
 };
 */
 
-const parsePost = (url, elems) => {
-    unirest.get(url)
-        .end(function (response) {
+const  parsePost = async (url, elems) =>  {
+   await unirest.get(url)
+        .end(({body}) => {
 
-            const body = response.body;
+            //const body = response.body;
             const $ = cheerio.load(body);
 
             const domain = url.match(/\/\/(.*?)\//)[1];
@@ -80,7 +84,8 @@ const parsePost = (url, elems) => {
 };
 
 
-module.exports = parsePost;
+//module.exports = parsePost;
+export default parsePost
 
 
 

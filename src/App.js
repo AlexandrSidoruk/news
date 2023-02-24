@@ -1,20 +1,41 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Post from "./components/Post";
+import axios from "axios";
+import {useSelector, useDispatch} from "react-redux";
 
-import posts from "./posts"
+import {setPosts} from "./redux/actions/posts";
+
+
+
 
 function App() {
-  return (
+const dispatch = useDispatch()
+const {items} = useSelector(({posts}) => {
+    return {
+        items: posts.items
+    }
+})
+
+
+    useEffect(() => {
+        axios.get('https://63f5d48659c944921f674f8a.mockapi.io/posts').then(({data})=> {
+            dispatch(setPosts(data)) })
+    },[])
+
+
+
+    return (
+
    <div>
-    {posts.map((post , key) => {
-      return (
-      <Post key={key}
-          title={post.title}
-          description={post.description}
-          image={post.image}
-      />
-      )
-    })}
+    {items && items.map(({title, description, image} , key) => {
+       return (
+       <Post key={key}
+       title={title}
+       description={description}
+       image={image}
+       />
+       )
+   })}
    </div>
   );
 }

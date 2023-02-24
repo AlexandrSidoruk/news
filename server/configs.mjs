@@ -12,4 +12,5 @@ const elems = {
 
 }
 
-module.exports =  {elems};
+//module.exports =  {elems};
+export default elems
